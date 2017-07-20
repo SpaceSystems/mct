@@ -19,5 +19,5 @@ TELEMETRY CFS CFE_SB_STATMSG BIG_ENDIAN "SB Statistics Telemetry Packet"
   APPEND_ITEM SBBUFFERSINUSE 32 UINT "Number of SB message buffers currently in use."
   APPEND_ITEM PEAKSBBUFFERSINUSE 32 UINT "Max number of SB message buffers in use."
   APPEND_ITEM MAXPIPEDEPTHALLOWED 32 UINT "cFE Cfg Param CFE_SB_MAX_PIPE_DEPTH"
-  APPEND_ARRAY_ITEM PIPEDEPTHSTATS 64 UINT 4096 "Pipe Depth Statistics CFE_SB_PipeDepthStats_t."
+  APPEND_ARRAY_ITEM PIPEDEPTHSTATS 64 UINT 192 "Pipe Depth Statistics CFE_SB_PipeDepthStats_t."
 

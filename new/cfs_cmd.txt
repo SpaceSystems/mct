@@ -124,14 +124,6 @@ COMMAND CFS CFE_ES_RESET_PR_COUNT BIG_ENDIAN "This command allows the user to re
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 19 "CCSDS Command Function Code"
 
-COMMAND CFS CFE_ES_RESTART_APP BIG_ENDIAN "This command halts and restarts the specified Application. This command does NOT reload the application from the onboard filesystem."
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1806 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 6 "CCSDS Command Function Code"
-  APPEND_PARAMETER APPLICATION 160 STRING "default" "ASCII text string containing Application Name."
-
 COMMAND CFS CFE_ES_RESTART BIG_ENDIAN "This command restarts the cFE in one of two modes. The Power-On Reset will cause the cFE to restart as though the power were first applied to the processor. The Processor Reset will attempt to retain the contents of the volatile disk and the contents of the Critical Data Store. NOTE: If a requested Processor Reset should cause the Processor Reset Counter ($sc_$cpu_ES_ProcResetCnt) to exceed OR EQUAL the limit CFE_ES_MAX_PROCESSOR_RESETS (which is reported in housekeeping telemetry as $sc_$cpu_ES_MaxProcResets), the command is AUTOMATICALLY upgraded to a Power-On Reset."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1806 "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
@@ -139,6 +131,14 @@ COMMAND CFS CFE_ES_RESTART BIG_ENDIAN "This command restarts the cFE in one of t
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 2 "CCSDS Command Function Code"
   APPEND_PARAMETER RESTARTTYPE 16 UINT MIN_UINT16 MAX_UINT16 0 "CFE_ES_PROCESSOR_RESET=Processor Reset or CFE_ES_POWERON_RESET=Power-On Reset"
+
+COMMAND CFS CFE_ES_RESTART_APP BIG_ENDIAN "This command halts and restarts the specified Application. This command does NOT reload the application from the onboard filesystem."
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1806 "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 6 "CCSDS Command Function Code"
+  APPEND_PARAMETER APPLICATION 160 STRING "default" "ASCII text string containing Application Name."
 
 COMMAND CFS CFE_ES_SET_MAX_PR_COUNT BIG_ENDIAN "This command allows the user to specify the number of Processor Resets that are allowed before the next Processor Reset is upgraded to a Power-On Reset."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1806 "CCSDS Packet Identification" BIG_ENDIAN
@@ -728,7 +728,7 @@ COMMAND CFS CS_DISABLE_ENTRY_EEPROM BIG_ENDIAN "Disable the Eeprom entry backgro
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 19 "CCSDS Command Function Code"
-  APPEND_PARAMETER ENTRYID 16 UINT MIN_UINT16 MAX_UINT16 0 "EntryID to perform a command on."
+  APPEND_PARAMETER ENTRYID 32 UINT MIN_UINT32 MAX_UINT32 0 "EntryID to perform a command on."
 
 COMMAND CFS CS_DISABLE_ENTRY_MEMORY BIG_ENDIAN "Disable the Memory entry background checksumming"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189F "CCSDS Packet Identification" BIG_ENDIAN
@@ -736,7 +736,7 @@ COMMAND CFS CS_DISABLE_ENTRY_MEMORY BIG_ENDIAN "Disable the Memory entry backgro
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 26 "CCSDS Command Function Code"
-  APPEND_PARAMETER ENTRYID 16 UINT MIN_UINT16 MAX_UINT16 0 "EntryID to perform a command on."
+  APPEND_PARAMETER ENTRYID 32 UINT MIN_UINT32 MAX_UINT32 0 "EntryID to perform a command on."
 
 COMMAND CFS CS_DISABLE_MEMORY BIG_ENDIAN "Disable the Memory table background checksumming"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189F "CCSDS Packet Identification" BIG_ENDIAN
@@ -809,7 +809,7 @@ COMMAND CFS CS_ENABLE_ENTRY_EEPROM BIG_ENDIAN "Allow the Eeprom entry to checksu
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 18 "CCSDS Command Function Code"
-  APPEND_PARAMETER ENTRYID 16 UINT MIN_UINT16 MAX_UINT16 0 "EntryID to perform a command on."
+  APPEND_PARAMETER ENTRYID 32 UINT MIN_UINT32 MAX_UINT32 0 "EntryID to perform a command on."
 
 COMMAND CFS CS_ENABLE_ENTRY_MEMORY BIG_ENDIAN "Allow the Memory entry to checksummed in the background"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189F "CCSDS Packet Identification" BIG_ENDIAN
@@ -817,7 +817,7 @@ COMMAND CFS CS_ENABLE_ENTRY_MEMORY BIG_ENDIAN "Allow the Memory entry to checksu
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 25 "CCSDS Command Function Code"
-  APPEND_PARAMETER ENTRYID 16 UINT MIN_UINT16 MAX_UINT16 0 "EntryID to perform a command on."
+  APPEND_PARAMETER ENTRYID 32 UINT MIN_UINT32 MAX_UINT32 0 "EntryID to perform a command on."
 
 COMMAND CFS CS_ENABLE_MEMORY BIG_ENDIAN "Allow the Memory table to checksummed in the background"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189F "CCSDS Packet Identification" BIG_ENDIAN
@@ -879,7 +879,7 @@ COMMAND CFS CS_NOOP BIG_ENDIAN "Implements the Noop command that insures the CS 
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Function Code"
 
-COMMAND CFS CS_ONESHOT BIG_ENDIAN "Computes a checksum on the given address and size of memory specified in the command. This command spawns a child task to complete the checksum."
+COMMAND CFS CS_ONESHOT BIG_ENDIAN "Computes a checksum on the command specified address and size of memory at the command specified rate. This command spawns a child task to complete the checksum."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189F "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
@@ -887,6 +887,7 @@ COMMAND CFS CS_ONESHOT BIG_ENDIAN "Computes a checksum on the given address and 
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 2 "CCSDS Command Function Code"
   APPEND_PARAMETER ADDRESS 32 UINT MIN_UINT32 MAX_UINT32 0 "Address to start checksum."
   APPEND_PARAMETER SIZE 32 UINT MIN_UINT32 MAX_UINT32 0 "Number of bytes to checksum."
+  APPEND_PARAMETER MAXBYTESPERCYCLE 32 UINT MIN_UINT32 MAX_UINT32 0 "Max Number of bytes to compute per cycle. Value of Zero to use platform config value."
 
 COMMAND CFS CS_RECOMPUTE_BASELINE_APP BIG_ENDIAN "Recompute the baseline checksum of the app and use that value as the new baseline. This command spawns a child task to do the recompute."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189F "CCSDS Packet Identification" BIG_ENDIAN
@@ -909,7 +910,7 @@ COMMAND CFS CS_RECOMPUTE_BASELINE_EEPROM BIG_ENDIAN "Recompute the baseline chec
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 17 "CCSDS Command Function Code"
-  APPEND_PARAMETER ENTRYID 16 UINT MIN_UINT16 MAX_UINT16 0 "EntryID to perform a command on."
+  APPEND_PARAMETER ENTRYID 32 UINT MIN_UINT32 MAX_UINT32 0 "EntryID to perform a command on."
 
 COMMAND CFS CS_RECOMPUTE_BASELINE_MEMORY BIG_ENDIAN "Recompute the baseline checksum of the Memory table entry and use that value as the new baseline. This command spawns a child task to do the recompute."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189F "CCSDS Packet Identification" BIG_ENDIAN
@@ -917,7 +918,7 @@ COMMAND CFS CS_RECOMPUTE_BASELINE_MEMORY BIG_ENDIAN "Recompute the baseline chec
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 24 "CCSDS Command Function Code"
-  APPEND_PARAMETER ENTRYID 16 UINT MIN_UINT16 MAX_UINT16 0 "EntryID to perform a command on."
+  APPEND_PARAMETER ENTRYID 32 UINT MIN_UINT32 MAX_UINT32 0 "EntryID to perform a command on."
 
 COMMAND CFS CS_RECOMPUTE_BASELINE_OS BIG_ENDIAN "Recomputesthe baseline checksum of the OS code segment and use the new value as the baseline."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189F "CCSDS Packet Identification" BIG_ENDIAN
@@ -955,7 +956,7 @@ COMMAND CFS CS_REPORT_BASELINE_EEPROM BIG_ENDIAN "Reports the baseline checksum 
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 16 "CCSDS Command Function Code"
-  APPEND_PARAMETER ENTRYID 16 UINT MIN_UINT16 MAX_UINT16 0 "EntryID to perform a command on."
+  APPEND_PARAMETER ENTRYID 32 UINT MIN_UINT32 MAX_UINT32 0 "EntryID to perform a command on."
 
 COMMAND CFS CS_REPORT_BASELINE_MEMORY BIG_ENDIAN "Reports the baseline checksum of the Memory table entry that has already been calculated."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189F "CCSDS Packet Identification" BIG_ENDIAN
@@ -963,7 +964,7 @@ COMMAND CFS CS_REPORT_BASELINE_MEMORY BIG_ENDIAN "Reports the baseline checksum 
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 23 "CCSDS Command Function Code"
-  APPEND_PARAMETER ENTRYID 16 UINT MIN_UINT16 MAX_UINT16 0 "EntryID to perform a command on."
+  APPEND_PARAMETER ENTRYID 32 UINT MIN_UINT32 MAX_UINT32 0 "EntryID to perform a command on."
 
 COMMAND CFS CS_REPORT_BASELINE_OS BIG_ENDIAN "Reports the baseline checksum of the OS code segment that has already been calculated."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189F "CCSDS Packet Identification" BIG_ENDIAN
@@ -995,7 +996,7 @@ COMMAND CFS DS_ADD_MID BIG_ENDIAN "This command will change the Message ID selec
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 16 "CCSDS Command Function Code"
   APPEND_PARAMETER MESSAGEID 16 UINT MIN_UINT16 MAX_UINT16 0 "Message ID to add to Packet Filter Table."
 
-COMMAND CFS DS_CLOSE_ALL BIG_ENDIAN "This command will close all open Destination Files. NOTE: Using this command may incur a performance hit based upon the number and size of the files being closed. "
+COMMAND CFS DS_CLOSE_ALL BIG_ENDIAN "This command will close all open Destination Files. NOTE: Using this command may incur a performance hit based upon the number and size of the files being closed.  "
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18BB "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
@@ -1008,7 +1009,7 @@ COMMAND CFS DS_CLOSE_FILE BIG_ENDIAN "This command will close the indicated Dest
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 14 "CCSDS Command Function Code"
-  APPEND_PARAMETER FILETABLEINDEX 32 UINT MIN_UINT32 MAX_UINT32 0 "Index into Destination File Table."
+  APPEND_PARAMETER FILETABLEINDEX 16 UINT MIN_UINT16 MAX_UINT16 0 "Index into Destination File Table."
 
 COMMAND CFS DS_GET_FILE_INFO BIG_ENDIAN "This command will send the DS File Info Packet."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18BB "CCSDS Packet Identification" BIG_ENDIAN
@@ -1024,7 +1025,7 @@ COMMAND CFS DS_NOOP BIG_ENDIAN "This command will increment the command executio
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Function Code"
 
-COMMAND CFS DS_RESET BIG_ENDIAN "This command will set the following housekeeping counters to zero: Command Execution Counter ($sc_$cpu_DS_CMDPC)Command Error Counter ($sc_$cpu_DS_CMDEC)Ignored Packet Counter ($sc_$cpu_DS_IgnoredPktCnt)Filtered Packet Counter ($sc_$cpu_DS_FilteredPktCnt)Passed Packet Counter ($sc_$cpu_DS_PassedPktCnt)File Access Counter ($sc_$cpu_DS_FileWriteCnt)File Access Error Counter ($sc_$cpu_DS_FileWriteErrCnt)Destination Table Load Counter ($sc_$cpu_DS_DestLoadCnt)Filter Table Load Counter ($sc_$cpu_DS_FilterLoadCnt)Destination Table Ptr Error Counter ($sc_$cpu_DS_DestPtrErrCnt)Filter Table Ptr Error Counter ($sc_$cpu_DS_FilterPtrErrCnt) "
+COMMAND CFS DS_RESET BIG_ENDIAN "This command will set the following housekeeping counters to zero: Command Execution Counter ($sc_$cpu_DS_CMDPC) Command Error Counter ($sc_$cpu_DS_CMDEC) Ignored Packet Counter ($sc_$cpu_DS_IgnoredPktCnt) Filtered Packet Counter ($sc_$cpu_DS_FilteredPktCnt) Passed Packet Counter ($sc_$cpu_DS_PassedPktCnt) File Access Counter ($sc_$cpu_DS_FileWriteCnt) File Access Error Counter ($sc_$cpu_DS_FileWriteErrCnt) Destination Table Load Counter ($sc_$cpu_DS_DestLoadCnt) Filter Table Load Counter ($sc_$cpu_DS_FilterLoadCnt) Destination Table Ptr Error Counter ($sc_$cpu_DS_DestPtrErrCnt) Filter Table Ptr Error Counter ($sc_$cpu_DS_FilterPtrErrCnt)  "
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18BB "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
@@ -1045,7 +1046,7 @@ COMMAND CFS DS_SET_DEST_AGE BIG_ENDIAN "This command will modify the max file ag
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 12 "CCSDS Command Function Code"
-  APPEND_PARAMETER FILETABLEINDEX 32 UINT MIN_UINT32 MAX_UINT32 0 "Index into Destination File Table."
+  APPEND_PARAMETER FILETABLEINDEX 16 UINT MIN_UINT16 MAX_UINT16 0 "Index into Destination File Table."
   APPEND_PARAMETER MAXFILEAGE 32 UINT MIN_UINT32 MAX_UINT32 0 "Max file age (seconds)."
 
 COMMAND CFS DS_SET_DEST_BASE BIG_ENDIAN "This command will modify the Basename portion of the filename for the indicated entry in the Destination File Table."
@@ -1054,7 +1055,7 @@ COMMAND CFS DS_SET_DEST_BASE BIG_ENDIAN "This command will modify the Basename p
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 9 "CCSDS Command Function Code"
-  APPEND_PARAMETER FILETABLEINDEX 32 UINT MIN_UINT32 MAX_UINT32 0 "Index into Destination File Table."
+  APPEND_PARAMETER FILETABLEINDEX 16 UINT MIN_UINT16 MAX_UINT16 0 "Index into Destination File Table."
   APPEND_PARAMETER BASENAME 0 STRING "default" "Base portion of filename."
 
 COMMAND CFS DS_SET_DEST_COUNT BIG_ENDIAN "This command will modify the sequence count value for the indicated entry in the Destination File Table."
@@ -1063,7 +1064,7 @@ COMMAND CFS DS_SET_DEST_COUNT BIG_ENDIAN "This command will modify the sequence 
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 13 "CCSDS Command Function Code"
-  APPEND_PARAMETER FILETABLEINDEX 32 UINT MIN_UINT32 MAX_UINT32 0 "Index into Destination File Table."
+  APPEND_PARAMETER FILETABLEINDEX 16 UINT MIN_UINT16 MAX_UINT16 0 "Index into Destination File Table."
   APPEND_PARAMETER SEQUENCECOUNT 32 UINT MIN_UINT32 MAX_UINT32 0 "Sequence count portion of filename."
 
 COMMAND CFS DS_SET_DEST_EXT BIG_ENDIAN "This command will modify the Extension portion of the filename for the indicated entry in the Destination File Table."
@@ -1072,7 +1073,7 @@ COMMAND CFS DS_SET_DEST_EXT BIG_ENDIAN "This command will modify the Extension p
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 10 "CCSDS Command Function Code"
-  APPEND_PARAMETER FILETABLEINDEX 32 UINT MIN_UINT32 MAX_UINT32 0 "Index into Destination File Table."
+  APPEND_PARAMETER FILETABLEINDEX 16 UINT MIN_UINT16 MAX_UINT16 0 "Index into Destination File Table."
   APPEND_PARAMETER EXTENSION 64 STRING "default" "Extension portion of filename."
 
 COMMAND CFS DS_SET_DEST_PATH BIG_ENDIAN "This command will modify the Pathname portion of the filename for the indicated entry in the Destination File Table."
@@ -1081,7 +1082,7 @@ COMMAND CFS DS_SET_DEST_PATH BIG_ENDIAN "This command will modify the Pathname p
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 8 "CCSDS Command Function Code"
-  APPEND_PARAMETER FILETABLEINDEX 32 UINT MIN_UINT32 MAX_UINT32 0 "Index into Destination File Table."
+  APPEND_PARAMETER FILETABLEINDEX 16 UINT MIN_UINT16 MAX_UINT16 0 "Index into Destination File Table."
   APPEND_PARAMETER PATHNAME 0 STRING "default" "Path portion of filename."
 
 COMMAND CFS DS_SET_DEST_SIZE BIG_ENDIAN "This command will modify the max file size selection for the indicated entry in the Destination File Table."
@@ -1090,7 +1091,7 @@ COMMAND CFS DS_SET_DEST_SIZE BIG_ENDIAN "This command will modify the max file s
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 11 "CCSDS Command Function Code"
-  APPEND_PARAMETER FILETABLEINDEX 32 UINT MIN_UINT32 MAX_UINT32 0 "Index into Destination File Table."
+  APPEND_PARAMETER FILETABLEINDEX 16 UINT MIN_UINT16 MAX_UINT16 0 "Index into Destination File Table."
   APPEND_PARAMETER MAXFILESIZE 32 UINT MIN_UINT32 MAX_UINT32 0 "Max file size (bytes) before re-open."
 
 COMMAND CFS DS_SET_DEST_STATE BIG_ENDIAN "This command will modify the Ena/Dis State selection for the indicated entry in the Destination File Table."
@@ -1177,14 +1178,6 @@ COMMAND CFS FM_DECOMPRESS BIG_ENDIAN "This command invokes a CFE function to dec
   APPEND_PARAMETER SOURCE 512 STRING "default" "Source filename."
   APPEND_PARAMETER TARGET 512 STRING "default" "Target filename."
 
-COMMAND CFS FM_DELETE_ALL BIG_ENDIAN "This command deletes all files in the source directory. Source must be an existing directory. Open files and sub-directories are not deleted. Because of the possibility that this command might take a very long time to complete, command argument validation will be done immediately but reading the directory and deleting each file will be performed by a lower priority child task. As such, the return value for this function only refers to the result of command argument verification and being able to place the command on the child task interface queue."
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x188C "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 7 "CCSDS Command Function Code"
-  APPEND_PARAMETER DIRECTORY 512 STRING "default" "Directory name."
-
 COMMAND CFS FM_DELETE BIG_ENDIAN "This command deletes the source file. Source must be an existing file that is not open."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x188C "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
@@ -1192,6 +1185,14 @@ COMMAND CFS FM_DELETE BIG_ENDIAN "This command deletes the source file. Source m
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 5 "CCSDS Command Function Code"
   APPEND_PARAMETER FILENAME 512 STRING "default" "Delete filename."
+
+COMMAND CFS FM_DELETE_ALL BIG_ENDIAN "This command deletes all files in the source directory. Source must be an existing directory. Open files and sub-directories are not deleted. Because of the possibility that this command might take a very long time to complete, command argument validation will be done immediately but reading the directory and deleting each file will be performed by a lower priority child task. As such, the return value for this function only refers to the result of command argument verification and being able to place the command on the child task interface queue."
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x188C "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 7 "CCSDS Command Function Code"
+  APPEND_PARAMETER DIRECTORY 512 STRING "default" "Directory name."
 
 COMMAND CFS FM_DELETE_DIR BIG_ENDIAN "This command deletes the source directory, it does not delete the contents of the directory. Source must be a valid directory name that exists."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x188C "CCSDS Packet Identification" BIG_ENDIAN
@@ -1217,6 +1218,7 @@ COMMAND CFS FM_GET_DIR_FILE BIG_ENDIAN "This command writes a listing of the con
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 14 "CCSDS Command Function Code"
   APPEND_PARAMETER DIRECTORY 512 STRING "default" "Directory name."
   APPEND_PARAMETER FILENAME 512 STRING "default" "Filename."
+  APPEND_PARAMETER GETSIZETIMEMODE 8 UINT MIN_UINT8 MAX_UINT8 0 "Option to query size, time, and mode of files (CPU intensive)."
 
 COMMAND CFS FM_GET_DIR_PKT BIG_ENDIAN "This command creates a telemetry packet FM_DirListPkt_t that contains a listing of the entries in the specified directory. Since the packet will likely hold fewer entries than will be possible in a directory, the command also provides an index argument to define which entry in the directory is the first entry reported in the telemetry packet. After reading the directory list and skipping entries until reaching the index of the first entry reported, the remaining entries in the packet are filled sequentially until either the packet is full or until there are no more entries in the directory. The first entry index is zero based - thus, when the first entry index is zero the first directory entry will be the first packet entry. The number of entries per packet FM_DIR_LIST_PKT_ENTRIES is a platform configuration definition. Because of the possibility that this command might take a very long time to complete, command argument validation will be done immediately but reading the directory will be performed by a lower priority child task. As such, the return value for this function only refers to the result of command argument verification and being able to place the command on the child task interface queue."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x188C "CCSDS Packet Identification" BIG_ENDIAN
@@ -1226,6 +1228,7 @@ COMMAND CFS FM_GET_DIR_PKT BIG_ENDIAN "This command creates a telemetry packet F
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 15 "CCSDS Command Function Code"
   APPEND_PARAMETER DIRECTORY 512 STRING "default" "Directory name."
   APPEND_PARAMETER DIRLISTOFFSET 32 UINT MIN_UINT32 MAX_UINT32 0 "Index of 1st dir entry to put in packet."
+  APPEND_PARAMETER GETSIZETIMEMODE 8 UINT MIN_UINT8 MAX_UINT8 0 "Option to query size, time, and mode of files (CPU intensive)."
 
 COMMAND CFS FM_GET_FILE_INFO BIG_ENDIAN "This command creates an FM file information telemetry packet for the source file. The file information packet includes status that indicates whether source is a file that is open or closed, a directory, or does not exist. The file information data also includes a CRC, file size, last modify time and the source name. Because of the possibility that this command might take a very long time to complete, command argument validation will be done immediately but collecting the status data and calculating the CRC will be performed by a lower priority child task. As such, the return value for this function only refers to the result of command argument verification and being able to place the command on the child task interface queue."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x188C "CCSDS Packet Identification" BIG_ENDIAN
@@ -1276,12 +1279,21 @@ COMMAND CFS FM_RENAME BIG_ENDIAN "This command renames the source file to the ta
   APPEND_PARAMETER SOURCE 512 STRING "default" "Source filename."
   APPEND_PARAMETER TARGET 512 STRING "default" "Target filename."
 
-COMMAND CFS FM_RESET BIG_ENDIAN "This command resets the following housekeeping telemetry: Command success counter /FM_CMDPCCommand error counter /FM_CMDECCommand warning counter /FM_WarnCtrChild cmd success counter /FM_ChildCMDPCChild cmd error counter /FM_ChildCMDECChild cmd warning counter /FM_ChildWarnCtr "
+COMMAND CFS FM_RESET BIG_ENDIAN "This command resets the following housekeeping telemetry: Command success counter /FM_CMDPC Command error counter /FM_CMDEC Command warning counter /FM_WarnCtr Child cmd success counter /FM_ChildCMDPC Child cmd error counter /FM_ChildCMDEC Child cmd warning counter /FM_ChildWarnCtr  "
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x188C "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 1 "CCSDS Command Function Code"
+
+COMMAND CFS FM_SET_FILE_PERM BIG_ENDIAN "This command sets the permissions for a file. This is a direct interface to OS_chmod in the OSAL. OS_chmod accepts a uint32 to set the file's mode. The mode value also contains the type of file (regular or directory, etc) so care should be taken to not change the file type from regular to directory or vice-versa. Examples for a regular file:"
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x188C "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 19 "CCSDS Command Function Code"
+  APPEND_PARAMETER FILENAME 512 STRING "default" "File name of the permissions to set."
+  APPEND_PARAMETER MODE 32 UINT MIN_UINT32 MAX_UINT32 0 "Permissions, passed directly to OS_chmod."
 
 COMMAND CFS FM_SET_TABLE_STATE BIG_ENDIAN "This command enables or disables a single entry in the FM file system free space table. Only table entries that are currently enabled or disabled may be modified by command. Unused table entries cannot be modified."
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x188C "CCSDS Packet Identification" BIG_ENDIAN
@@ -1299,7 +1311,7 @@ COMMAND CFS HK_NOOP BIG_ENDIAN "This command will increment the command executio
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Function Code"
 
-COMMAND CFS HK_RESET BIG_ENDIAN "This command resets the following counters within the HK housekeeping telemetry: Command Execution Counter ($sc_$cpu_HK_CMDPC)Command Error Counter ($sc_$cpu_HK_CMDEC)Combined Packets Sent Counter ($sc_$cpu_HK_CmbPktSent)Missing Data Counter ($sc_$cpu_HK_MissDataCtr) "
+COMMAND CFS HK_RESET BIG_ENDIAN "This command resets the following counters within the HK housekeeping telemetry: Command Execution Counter ($sc_$cpu_HK_CMDPC)Command Error Counter ($sc_$cpu_HK_CMDEC)Combined Packets Sent Counter ($sc_$cpu_HK_CmbPktSent)Missing Data Counter ($sc_$cpu_HK_MissDataCtr) "
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x189A "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
@@ -1313,7 +1325,7 @@ COMMAND CFS HS_DISABLE_ALIVENESS BIG_ENDIAN "Disables the Aliveness Indicator UA
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 7 "CCSDS Command Function Code"
 
-COMMAND CFS HS_DISABLE_APPMON BIG_ENDIAN "Disables the Critical Applications Monitor"
+COMMAND CFS HS_DISABLE_APPMON BIG_ENDIAN "Disables the Applications Monitor"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18AE "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
@@ -1327,7 +1339,7 @@ COMMAND CFS HS_DISABLE_CPUHOG BIG_ENDIAN "Disables the CPU Hogging Indicator Eve
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 11 "CCSDS Command Function Code"
 
-COMMAND CFS HS_DISABLE_EVENTMON BIG_ENDIAN "Disables the Critical Events Monitor"
+COMMAND CFS HS_DISABLE_EVENTMON BIG_ENDIAN "Disables the Events Monitor"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18AE "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
@@ -1341,7 +1353,7 @@ COMMAND CFS HS_ENABLE_ALIVENESS BIG_ENDIAN "Enables the Aliveness Indicator UART
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 6 "CCSDS Command Function Code"
 
-COMMAND CFS HS_ENABLE_APPMON BIG_ENDIAN "Enables the Critical Applications Monitor"
+COMMAND CFS HS_ENABLE_APPMON BIG_ENDIAN "Enables the Applications Monitor"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18AE "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
@@ -1355,7 +1367,7 @@ COMMAND CFS HS_ENABLE_CPUHOG BIG_ENDIAN "Enables the CPU Hogging Indicator Event
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 10 "CCSDS Command Function Code"
 
-COMMAND CFS HS_ENABLE_EVENTMON BIG_ENDIAN "Enables the Critical Events Monitor"
+COMMAND CFS HS_ENABLE_EVENTMON BIG_ENDIAN "Enables the Events Monitor"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18AE "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
@@ -1398,6 +1410,13 @@ COMMAND CFS LC_NOOP BIG_ENDIAN "Implements the Noop command that insures the LC 
   APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Function Code"
 
+COMMAND CFS LC_RESET BIG_ENDIAN "Resets the LC housekeeping counters"
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18A4 "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 1 "CCSDS Command Function Code"
+
 COMMAND CFS LC_RESET_AP_STATS BIG_ENDIAN "Resets actionpoint statistics"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18A4 "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
@@ -1406,13 +1425,6 @@ COMMAND CFS LC_RESET_AP_STATS BIG_ENDIAN "Resets actionpoint statistics"
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 5 "CCSDS Command Function Code"
   APPEND_PARAMETER APNUMBER 16 UINT MIN_UINT16 MAX_UINT16 0 "Which actionpoint(s) to change."
   APPEND_PARAMETER PADDING 16 UINT MIN_UINT16 MAX_UINT16 0 "Structure padding."
-
-COMMAND CFS LC_RESET BIG_ENDIAN "Resets the LC housekeeping counters"
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18A4 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 1 "CCSDS Command Function Code"
 
 COMMAND CFS LC_RESET_WP_STATS BIG_ENDIAN "Resets watchpoint statistics"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18A4 "CCSDS Packet Identification" BIG_ENDIAN
@@ -1623,6 +1635,68 @@ COMMAND CFS MM_SYMTBL_TO_FILE BIG_ENDIAN "Saves the system symbol table to a fil
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 10 "CCSDS Command Function Code"
   APPEND_PARAMETER FILENAME 512 STRING "default" "Name of symbol dump file."
 
+COMMAND CFS SCH_DISABLE BIG_ENDIAN "This command disables a single activity in the Schedule Definition Table."
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 3 "CCSDS Command Function Code"
+  APPEND_PARAMETER SLOTNUMBER 16 UINT MIN_UINT16 MAX_UINT16 0 "Slot Number of Activity whose state is to change."
+  APPEND_PARAMETER ENTRYNUMBER 16 UINT MIN_UINT16 MAX_UINT16 0 "Entry Number of Activity whose state is to change."
+
+COMMAND CFS SCH_DISABLE_GROUP BIG_ENDIAN "This command disables a single group and/or a collection of Multi-Group Activities in the Schedule Definition Table."
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 5 "CCSDS Command Function Code"
+  APPEND_PARAMETER GROUPDATA 32 UINT MIN_UINT32 MAX_UINT32 0 "Group and Multi-Group Identifiers."
+
+COMMAND CFS SCH_ENABLE BIG_ENDIAN "This command enables a single activity in the Schedule Definition Table."
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 2 "CCSDS Command Function Code"
+  APPEND_PARAMETER SLOTNUMBER 16 UINT MIN_UINT16 MAX_UINT16 0 "Slot Number of Activity whose state is to change."
+  APPEND_PARAMETER ENTRYNUMBER 16 UINT MIN_UINT16 MAX_UINT16 0 "Entry Number of Activity whose state is to change."
+
+COMMAND CFS SCH_ENABLE_GROUP BIG_ENDIAN "This command enables a single group and/or a collection of Multi-Group Activities in the Schedule Definition Table."
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 4 "CCSDS Command Function Code"
+  APPEND_PARAMETER GROUPDATA 32 UINT MIN_UINT32 MAX_UINT32 0 "Group and Multi-Group Identifiers."
+
+COMMAND CFS SCH_ENABLE_SYNC BIG_ENDIAN "This command allows the operator to enable processing and synchronization of the Major Frame Signal to the processing of the Schedule Definition Table."
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 6 "CCSDS Command Function Code"
+
+COMMAND CFS SCH_NOOP BIG_ENDIAN "This command performs no other function than to increment the command execution counter. The command may be used to verify general aliveness of the Scheduler Application."
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Function Code"
+
+COMMAND CFS SCH_RESET BIG_ENDIAN "This command resets the following counters within the Scheduler housekeeping telemetry: Command Execution Counter ($sc_$cpu_SCH_CMDPC) Command Error Counter ($sc_$cpu_SCH_CMDEC) Schedule Activities Success Counter ($sc_$cpu_SCH_ActSuccessCtr) Schedule Activities Failure Counter ($sc_$cpu_SCH_ActFailCtr) Schedule Slots Processed Counter ($sc_$cpu_SCH_SlotProcCtr) Schedule Skipping Slots Counter ($sc_$cpu_SCH_SlotSkipCtr) Multiple Schedule Slots Processed Counter ($sc_$cpu_SCH_MultSlotCtr) Awoke in Same Slot Counter ($sc_$cpu_SCH_SameSlotCtr) Corrupted Table Data Counter ($sc_$cpu_SCH_BadTblDataCtr) Table Loads Successfully Verified Counter ($sc_$cpu_SCH_TblPassVerifyCtr) Table Loads Unsuccessfully Verified Counter ($sc_$cpu_SCH_TblFailVerifyCtr) Valid Major Frames Received Counter ($sc_$cpu_SCH_ValidMajorFrameCtr) Missed Major Frames Received Counter ($sc_$cpu_SCH_MissedMajorFrameCtr) Unexpected Major Frames Received Counter ($sc_$cpu_SCH_UnexpectedMajorFrameCtr)  "
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 1 "CCSDS Command Function Code"
+
+COMMAND CFS SCH_SEND_DIAG_TLM BIG_ENDIAN "This command generates and sends the Scheduler Application's Diagnostic Telemetry packet."
+  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
+  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
+  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 7 "CCSDS Command Function Code"
+
 COMMAND CFS SC_APPEND_ATS BIG_ENDIAN "Adds contents of the Append table to the specified ATS table"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18A9 "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
@@ -1673,68 +1747,6 @@ COMMAND CFS SC_ENABLE_RTSGRP BIG_ENDIAN "The enable state for an RTS may be ENAB
   APPEND_PARAMETER FIRSTRTSID 16 UINT MIN_UINT16 MAX_UINT16 0 "ID of the first RTS to act on, 1 through SC_NUMBER_OF_RTS."
   APPEND_PARAMETER LASTRTSID 16 UINT MIN_UINT16 MAX_UINT16 0 "ID of the last RTS to act on, 1 through SC_NUMBER_OF_RTS."
 
-COMMAND CFS SCH_DISABLE BIG_ENDIAN "This command disables a single activity in the Schedule Definition Table."
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 3 "CCSDS Command Function Code"
-  APPEND_PARAMETER SLOTNUMBER 16 UINT MIN_UINT16 MAX_UINT16 0 "Slot Number of Activity whose state is to change."
-  APPEND_PARAMETER ENTRYNUMBER 16 UINT MIN_UINT16 MAX_UINT16 0 "Entry Number of Activity whose state is to change."
-
-COMMAND CFS SCH_DISABLE_GROUP BIG_ENDIAN "This command disables a single group and/or a collection of Multi-Group Activities in the Schedule Definition Table."
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 5 "CCSDS Command Function Code"
-  APPEND_PARAMETER GROUPDATA 32 UINT MIN_UINT32 MAX_UINT32 0 "Group and Multi-Group Identifiers."
-
-COMMAND CFS SCH_ENABLE BIG_ENDIAN "This command enables a single activity in the Schedule Definition Table."
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 2 "CCSDS Command Function Code"
-  APPEND_PARAMETER SLOTNUMBER 16 UINT MIN_UINT16 MAX_UINT16 0 "Slot Number of Activity whose state is to change."
-  APPEND_PARAMETER ENTRYNUMBER 16 UINT MIN_UINT16 MAX_UINT16 0 "Entry Number of Activity whose state is to change."
-
-COMMAND CFS SCH_ENABLE_GROUP BIG_ENDIAN "This command enables a single group and/or a collection of Multi-Group Activities in the Schedule Definition Table."
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 4 "CCSDS Command Function Code"
-  APPEND_PARAMETER GROUPDATA 32 UINT MIN_UINT32 MAX_UINT32 0 "Group and Multi-Group Identifiers."
-
-COMMAND CFS SCH_ENABLE_SYNC BIG_ENDIAN "This command allows the operator to enable processing and synchronization of the Major Frame Signal to the processing of the Schedule Definition Table."
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 6 "CCSDS Command Function Code"
-
-COMMAND CFS SCH_NOOP BIG_ENDIAN "This command performs no other function than to increment the command execution counter. The command may be used to verify general aliveness of the Scheduler Application."
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Function Code"
-
-COMMAND CFS SCH_RESET BIG_ENDIAN "This command resets the following counters within the Scheduler housekeeping telemetry: Command Execution Counter ($sc_$cpu_SCH_CMDPC)Command Error Counter ($sc_$cpu_SCH_CMDEC)Schedule Activities Success Counter ($sc_$cpu_SCH_ActSuccessCtr)Schedule Activities Failure Counter ($sc_$cpu_SCH_ActFailCtr)Schedule Slots Processed Counter ($sc_$cpu_SCH_SlotProcCtr)Schedule Skipping Slots Counter ($sc_$cpu_SCH_SlotSkipCtr)Multiple Schedule Slots Processed Counter ($sc_$cpu_SCH_MultSlotCtr)Awoke in Same Slot Counter ($sc_$cpu_SCH_SameSlotCtr)Corrupted Table Data Counter ($sc_$cpu_SCH_BadTblDataCtr)Table Loads Successfully Verified Counter ($sc_$cpu_SCH_TblPassVerifyCtr)Table Loads Unsuccessfully Verified Counter ($sc_$cpu_SCH_TblFailVerifyCtr)Valid Major Frames Received Counter ($sc_$cpu_SCH_ValidMajorFrameCtr)Missed Major Frames Received Counter ($sc_$cpu_SCH_MissedMajorFrameCtr)Unexpected Major Frames Received Counter ($sc_$cpu_SCH_UnexpectedMajorFrameCtr) "
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 1 "CCSDS Command Function Code"
-
-COMMAND CFS SCH_SEND_DIAG_TLM BIG_ENDIAN "This command generates and sends the Scheduler Application's Diagnostic Telemetry packet."
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x1895 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 7 "CCSDS Command Function Code"
-
 COMMAND CFS SC_JUMP_ATS BIG_ENDIAN "Moves the 'current time' pointer in the ATS to another time"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18A9 "CCSDS Packet Identification" BIG_ENDIAN
   APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
@@ -1744,12 +1756,6 @@ COMMAND CFS SC_JUMP_ATS BIG_ENDIAN "Moves the 'current time' pointer in the ATS 
   APPEND_PARAMETER NEWTIME 32 UINT MIN_UINT32 MAX_UINT32 0 "the time to 'jump' to"
 
 COMMAND CFS SC_MANAGE_TABLE BIG_ENDIAN "This command signals a need for the host application (SC) to allow cFE Table Services to manage the specified table. For loadable tables, this command indicates that a table update is available. For dump only tables, this command indicates that cFE Table Services wants to dump the table data. In either case, the host application must call the table manage API function so that the pending function can be executed within the context of the host."
-  APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18A9 "CCSDS Packet Identification" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_SEQUENCE 16 UINT MIN_UINT16 MAX_UINT16 0xC000 "CCSDS Packet Sequence Control" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_LENGTH 16 UINT MIN_UINT16 MAX_UINT16 1 "CCSDS Packet Data Length" BIG_ENDIAN
-  APPEND_PARAMETER CCSDS_CHECKSUM 8 UINT MIN_UINT8 MAX_UINT8 0 "CCSDS Command Checksum"
-  APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 12 "CCSDS Command Function Code"
-  APPEND_PARAMETER PARAMETER 32 UINT MIN_UINT32 MAX_UINT32 0 "Application specified command parameter. "
 
 COMMAND CFS SC_NOOP BIG_ENDIAN "Implements the Noop command that insures the SC app is alive"
   APPEND_ID_PARAMETER CCSDS_STREAMID 16 UINT MIN_UINT16 MAX_UINT16 0x18A9 "CCSDS Packet Identification" BIG_ENDIAN

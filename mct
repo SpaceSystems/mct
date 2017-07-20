@@ -4,10 +4,10 @@
 # Doxygen documentation.
 #
 # Before use, remove the space in the "${CFS_ROOT}/cfe/doc/cFE UsersGuide"
-# directory. ${CFS_ROOT} is assumed to be /home/${USERNAME}/cfs.
+# directory. ${CFS_ROOT} is assumed to be {MCT_ROOT}/../cfs.
 # Also, it is assumed that you are using all the open-source apps except SBN.
 # Otherwise, you will need to edit the "apps" list near the bottom.
-# Your COSMOS project is assumed to be at /home/${USERNAME}/COSMOS/cfs,
+# Your COSMOS project is assumed to be at {MCT_ROOT}/../cosmos,
 # and your target is assumed to be named CFS.
 # You will need a telemetry ID database called tlmids.txt in the directory
 # where you run this script. It should come with the script.
@@ -30,7 +30,6 @@
 require 'rubygems' #So that gems are a thing
 require 'nokogiri' #HTML parser
 require 'dentaku' #Formula parser
-require 'etc' #To get username
 
 
 
@@ -152,7 +151,8 @@ def getcomplexsize(defstring, path, cfepath)
   dependencies = calc.dependencies(defstring) #Find the variable names
   for dependency in dependencies #Get a variable's value
     dependency = dependency.upcase
-    thisdefstring = `grep -r "#define #{dependency}" #{cfepath} #{path}`.split("&nbsp;").last.split("   ").first
+    thisdefstring = `grep -r "#define #{dependency}" #{cfepath} #{path}`.split("&nbsp;").last
+    thisdefstring = thisdefstring[0, thisdefstring.index("</")].split("   ").first
     if (thisdefstring.include? "(") || (thisdefstring.include? "/") || (thisdefstring.include? "*")
       thisdefint = getcomplexsize(thisdefstring, path, cfepath) #Do recursively if needed
     else
@@ -235,7 +235,8 @@ def declareitem(item, cmdtlm, parentname, parentinfo, outfile, path, cfepath)
       if (arraysize.include? "(") || (arraysize.include? "/") || (arraysize.include? "*")
         defint = getcomplexsize(arraysize, path, cfepath)
       else
-        defstring = `grep -r "#define #{arraysize}" #{cfepath} #{path}`.split("&nbsp;").last.split("   ").first
+        defstring = `grep -r "#define #{arraysize}" #{cfepath} #{path}`.split("&nbsp;").last
+        defstring = defstring[0, defstring.index("</")].split("   ").first
         if defstring[0] == "("
           defint = getcomplexsize(defstring, path, cfepath)
         else
@@ -368,6 +369,8 @@ def mkcmds(apphome, path, cfepath, msgids)
 
       if cmdname == "FM_DELETE_INT" #If it's that one weird command
         cmdlink = "struct_f_m___delete_file_cmd__t.html"
+      elsif cmdname == "SC_MANAGE_TABLE"
+        cmdlink = "struct_c_f_e___t_b_l___notify_cmd__t.html"
       else #If it's not
         cmdlink = cmddetails.css("dl")[3].css("a")[0]['href']
       end
@@ -376,12 +379,10 @@ def mkcmds(apphome, path, cfepath, msgids)
       output.write(cmddec)
       output.write("\n")
 
-      if cmdname != "FM_DELETE_INT" && cmddetails.css("dl")[3].css("a")[0].text == "CFE_SB_CmdHdr_t" #That one weird command again
+      if cmdname != "FM_DELETE_INT" && cmdname != "SC_MANAGE_TABLE" && cmddetails.css("dl")[3].css("a")[0].text == "CFE_SB_CmdHdr_t"
         ccsds(output, 1, nil, msgid, cmdid)
       elsif cmdname == "SC_MANAGE_TABLE" #That other weird command
-        ccsds(output, 1, nil, msgid, cmdid)
-        output.write("  APPEND_PARAMETER PARAMETER 32 UINT MIN_UINT32 MAX_UINT32 0 \"Application specified command parameter. \"")
-        output.write("\n")
+        cmdpage = Nokogiri::HTML(open(cfepath + cmdlink))
       else #Normal commands
         cmdpage = Nokogiri::HTML(open(path + cmdlink))
   
@@ -412,9 +413,8 @@ def getmsgids()
     outfile.write(line)
   end
 
-  user = Etc.getlogin
-  cfepath = "/home/" + user +"/cfs/cfe/docs/cFEUsersGuide/Doxygen/"
-  appspath = "/home/" + user + "/cfs/apps/"
+  cfepath = Dir.pwd[0,Dir.pwd.rindex("/") + 1] + "/cfs/cfe/docs/cFEUsersGuide/Doxygen/"
+  appspath = Dir.pwd[0,Dir.pwd.rindex("/") + 1] + "/cfs/apps/"
   cfeapps = ["es", "evs", "sb", "time", "tbl"]
   apps = ["cf", "cs", "ds", "fm", "hk", "hs", "lc", "md", "mm", "sc", "sch"]
 
@@ -445,8 +445,10 @@ def getmsgids()
   for app in apps
     if app == "cf"
       infile = Nokogiri::HTML(open(appspath + app + "/docs/users_guide/html/" + app + "__msg_8h-source.html"))
-    else
+    elsif app == "hk" || app == "lc" || app == "md" || app == "mm"
       infile = Nokogiri::HTML(open(appspath + app + "/docs/users_guide/html/" + app + "__msgdefs_8h-source.html"))
+    else
+      infile = Nokogiri::HTML(open(appspath + app + "/docs/users_guide/html/" + app + "__msgdefs_8h_source.html"))
     end
     commands = infile.css(".preprocessor")
     for command in commands
@@ -492,12 +494,11 @@ end
 #Main
 
 #Basic path info.
-user = Etc.getlogin
-cfepath = "/home/" + user +"/cfs/cfe/docs/cFEUsersGuide/Doxygen/"
-appspath = "/home/" + user + "/cfs/apps/"
+cfepath = Dir.pwd[0,Dir.pwd.rindex("/") + 1] + "/cfs/cfe/docs/cFEUsersGuide/Doxygen/"
+appspath = Dir.pwd[0,Dir.pwd.rindex("/") + 1] + "/cfs/apps/"
 cfeapps = ["es", "evs", "sb", "tbl", "time"]
 apps = ["cf", "cs", "ds", "fm", "hk", "hs", "lc", "md", "mm", "sc", "sch"]
-puts "MCT assumes CFS root is /home/YOUR_USERNAME/cfs" 
+puts "MCT assumes CFS root is {MCT_ROOT}/../cfs" 
 puts "You can alter the path manually in the code if you need to"
 
 #Remove old .cmd and .tlm files
@@ -535,7 +536,7 @@ end
 `cat cmd/*.cmd > cfs_cmd.txt`
 
 #Move them to the proper directories, bring old ones here.
-system("mv /home/" + user + "/COSMOS/cfs/config/targets/CFS/cmd_tlm/cfs_cmd.txt ./old/")
-system("mv /home/" + user + "/COSMOS/cfs/config/targets/CFS/cmd_tlm/cfs_tlm.txt ./old/")
+system("mv " + Dir.pwd[0,Dir.pwd.rindex("/") + 1] + "/cosmos/config/targets/CFS/cmd_tlm/cfs_cmd.txt ./old/")
+system("mv " + Dir.pwd[0,Dir.pwd.rindex("/") + 1] + "/cosmos/config/targets/CFS/cmd_tlm/cfs_tlm.txt ./old/")
 system("cp cfs_* new/")
-system("mv cfs_* /home/" + user + "/COSMOS/cfs/config/targets/CFS/cmd_tlm/")
+system("mv cfs_* " + Dir.pwd[0,Dir.pwd.rindex("/") + 1] + "/cosmos/config/targets/CFS/cmd_tlm/")

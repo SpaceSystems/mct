@@ -9,5 +9,6 @@ TELEMETRY CFS FM_FILEINFOPKT BIG_ENDIAN "Get File Info telemetry packet"
   APPEND_ITEM CRC 32 UINT "CRC value if computed."
   APPEND_ITEM FILESIZE 32 UINT "File Size."
   APPEND_ITEM LASTMODIFIEDTIME 32 UINT "Last Modification Time of File."
+  APPEND_ITEM MODE 32 UINT "Mode of the file (Permissions)."
   APPEND_ITEM FILENAME 512 STRING "Name of File."
 

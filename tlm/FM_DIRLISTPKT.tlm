@@ -8,5 +8,5 @@ TELEMETRY CFS FM_DIRLISTPKT BIG_ENDIAN "Get Directory Listing telemetry packet"
   APPEND_ITEM TOTALFILES 32 UINT "Number of files in the directory."
   APPEND_ITEM PACKETFILES 32 UINT "Number of files in this packet."
   APPEND_ITEM FIRSTFILE 32 UINT "Index into directory files of first packet file."
-  APPEND_ARRAY_ITEM FILELIST 72 UINT 1440 "Directory listing file data."
+  APPEND_ARRAY_ITEM FILELIST 104 UINT 2080 "Directory listing file data."
 

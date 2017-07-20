@@ -6,4 +6,5 @@ COMMAND CFS FM_GET_DIR_FILE BIG_ENDIAN "This command writes a listing of the con
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 14 "CCSDS Command Function Code"
   APPEND_PARAMETER DIRECTORY 512 STRING "default" "Directory name."
   APPEND_PARAMETER FILENAME 512 STRING "default" "Filename."
+  APPEND_PARAMETER GETSIZETIMEMODE 8 UINT MIN_UINT8 MAX_UINT8 0 "Option to query size, time, and mode of files (CPU intensive)."
 

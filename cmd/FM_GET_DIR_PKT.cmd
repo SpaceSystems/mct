@@ -6,4 +6,5 @@ COMMAND CFS FM_GET_DIR_PKT BIG_ENDIAN "This command creates a telemetry packet F
   APPEND_PARAMETER CCSDS_FC 8 UINT MIN_UINT8 MAX_UINT8 15 "CCSDS Command Function Code"
   APPEND_PARAMETER DIRECTORY 512 STRING "default" "Directory name."
   APPEND_PARAMETER DIRLISTOFFSET 32 UINT MIN_UINT32 MAX_UINT32 0 "Index of 1st dir entry to put in packet."
+  APPEND_PARAMETER GETSIZETIMEMODE 8 UINT MIN_UINT8 MAX_UINT8 0 "Option to query size, time, and mode of files (CPU intensive)."
 

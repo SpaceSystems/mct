@@ -20,4 +20,5 @@ TELEMETRY CFS DS_HKPACKET BIG_ENDIAN "DS application housekeeping packet"
   APPEND_ITEM IGNOREDPKTCOUNTER 32 UINT "Count of packets discarded. Incoming packets will be discarded when:."
   APPEND_ITEM FILTEREDPKTCOUNTER 32 UINT "Count of packets discarded (failed filter test)."
   APPEND_ITEM PASSEDPKTCOUNTER 32 UINT "Count of packets that passed filter test."
+  APPEND_ITEM FILTERTBLFILENAME 512 STRING "Name of filter table file."
 
